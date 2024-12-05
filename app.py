@@ -1,6 +1,6 @@
 import os
 import openai
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from dotenv import load_dotenv, find_dotenv
 from flask_cors import CORS  # Import CORS
 
@@ -17,6 +17,11 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route('/')
 def home():
     return render_template('Main.html')
+
+# Serve static HTML files
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory('.', filename)
 
 # Route to evaluate the user's code using OpenAI's GPT API
 @app.route('/evaluate_answer', methods=['POST'])
