@@ -1,11 +1,11 @@
 import os
 import openai
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv, find_dotenv
 from flask_cors import CORS  # Import CORS
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Apply CORS to allow all origins or specify your frontend domain
 CORS(app)
@@ -13,6 +13,10 @@ CORS(app)
 # Load environment variables from .env file
 load_dotenv(find_dotenv())
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+@app.route('/')
+def home():
+    return render_template('Main.html')
 
 # Route to evaluate the user's code using OpenAI's GPT API
 @app.route('/evaluate_answer', methods=['POST'])
@@ -52,4 +56,5 @@ def evaluate_answer():
     
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
