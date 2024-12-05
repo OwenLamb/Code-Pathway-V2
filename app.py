@@ -18,10 +18,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def home():
     return render_template('Main.html')
 
-# Serve static HTML files
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory('.', filename)
+@app.route('/Lesson<int:lesson_number>.html')
+def lesson(lesson_number):
+    return render_template(f'Lesson{lesson_number}.html')
 
 # Route to evaluate the user's code using OpenAI's GPT API
 @app.route('/evaluate_answer', methods=['POST'])

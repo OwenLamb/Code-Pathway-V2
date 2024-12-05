@@ -1,3 +1,5 @@
+const backendUrl = window.location.origin + '/evaluate_answer';
+
 document.getElementById("Submit").addEventListener("click", async function() {
     let textareaContent = document.getElementById("UserCode").value;
 
@@ -6,7 +8,7 @@ document.getElementById("Submit").addEventListener("click", async function() {
 
     try {
         // Send user code to the backend for evaluation
-        let response = await fetch('http://127.0.0.1:5000/evaluate_answer', {
+        let response = await fetch(backendUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
